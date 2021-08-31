@@ -1,0 +1,6 @@
+load_dir: "./resources"
+save_dir: ""
+field: ""
+preprocessing: 1
+word_num: 0
+word_order: 1
