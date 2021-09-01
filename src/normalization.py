@@ -3,7 +3,7 @@
 
 def normalize(dic, scale=1, digits=0):
     max_val = max(dic.values())
-    min_val = max(dic.values())
+    min_val = min(dic.values())
 
     normalized_dic = []
     for key, val in dic.items():
