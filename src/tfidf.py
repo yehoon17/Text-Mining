@@ -35,3 +35,10 @@ class TfIdfCalculator:
             self.tfidf.append(temp)
         
         return self.tfidf
+
+    def get_tf(self, n):
+        total_tf = Counter()
+        for counter in self.tf:
+            total_tf.update(counter)
+
+        return total_tf.most_common(n)
