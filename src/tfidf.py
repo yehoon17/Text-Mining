@@ -9,6 +9,7 @@ class TfIdfCalculator:
         self.tf = []
         self.df = Counter()
         self.tfidf = []
+        self.words = None
 
     def get_tfidf(self, documents):
         # size: number of documents
@@ -24,7 +25,8 @@ class TfIdfCalculator:
 
         # get inverse document frequenct
         idf = {}
-        for word in set(self.df.elements()):
+        self.words = set(self.df.elements())
+        for word in self.words:
             idf[word] = log(size / (1 + self.df[word]))
 
         # calculate tf-idf
