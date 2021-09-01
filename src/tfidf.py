@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+
+import numpy as np
+from math import log
+
+
+class TfIdfVectorizer:
+    def __init__(self):
+        self.words = []
+        self.tf = {}
+        self.idf = {}
+
+    def fit(self, documents):        
+        # size: number of documents
+        size = len(documents)
+
+        # words: list of all word in documents
+        self.words = vocab(documents)
+
+        for word in self.words:
+            self.idf[word] = inverse_document_frequency(documents, word, size)
+
+    def transform(self, document):
+        words = list(set(document))
+        # term frequency
+        tf = {word : term_frequency(document, word) for word in words}
+
+        tfidf = {word : tf[word] * self.idf[word] for word in words}
+
+        return tfidf
+
+
+# get list of words in text
+def vocab(documents):
+    return list(set([word for document in documents for word in document]))
+
+# get the number of a word in a document
+def term_frequency(document, word):
+    return document.count(word)
+
+# get idf of a word
+def inverse_document_frequency(documents, word, size):
+    cnt = 0
+    for document in documents:
+        if word in document:
+            cnt += 1
+    
+    return log(size / (1 + cnt))
