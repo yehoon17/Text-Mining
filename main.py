@@ -64,8 +64,8 @@ def main():
             doc_ids.append(data["doc_id"])
 
     print("data loaded")
-    print("doc_id:", doc_ids[0])
-    print(texts[0])
+    # print("doc_id:", doc_ids[0])
+    # print(texts[0])
 
     # preprocess data
     print("preprocessing data...")
@@ -99,7 +99,8 @@ def main():
     # analysis
     print("start analysis")
     save_path = "result"
-    analysis(calculator, save_path)
+    analysis(doc_ids, scores, calculator, save_path)
+    print("analysis complete")
 
 
 if __name__ == "__main__":
