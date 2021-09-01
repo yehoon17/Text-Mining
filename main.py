@@ -26,8 +26,22 @@ def get_result(doc_ids, scores):
     
     for doc_id, score in zip(doc_ids, scores):
         result["DOCID"] = doc_id
+        score_li = [[key, val] for key, val in score.item]
+
+        # 단어 출력 방법
+        # 1: 단어 점수 기준 내림차순, 2: 단어 글자 기준 오름차순
+        if word_order == 1:
+            score_li.sort(key=lambda x:x[1], reverse=True)
+        elif word_order == 2:
+            score_li.sord(key=lambda x:x[0])
+
+        # 단어 출력 개수: 0 ~ N
+        # 0으로 설정할 시 모든 단어 출력
+        n = len(score) if word_num == 0 else word_num
+
         score_strs = []
-        for key, val in score.items():
+        for i in range(n):
+            key, val = score_li[i]
             score_str = "^".join([key,str(val)])
             score_strs.append(score_str)
         result["KEYWORD"] = " ".join(score_strs)
