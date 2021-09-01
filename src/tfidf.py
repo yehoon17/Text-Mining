@@ -15,7 +15,7 @@ class TfIdfVectorizer:
         size = len(documents)
 
         # words: list of all word in documents
-        self.words = vocab(documents)
+        self.words = list(set([word for document in documents for word in document]))
 
         for word in self.words:
             self.idf[word] = inverse_document_frequency(documents, word, size)
@@ -29,10 +29,6 @@ class TfIdfVectorizer:
 
         return tfidf
 
-
-# get list of words in text
-def vocab(documents):
-    return list(set([word for document in documents for word in document]))
 
 # get idf of a word
 def inverse_document_frequency(documents, word, size):
