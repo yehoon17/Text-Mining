@@ -36,6 +36,7 @@ def get_result(doc_ids, scores):
 
 def main():
     # load document data
+    print("loading data...")
     texts = []
     doc_ids = []
     with open(load_dir, encoding="utf-8") as f:
@@ -47,7 +48,12 @@ def main():
             texts.append(text)
             doc_ids.append(data["doc_id"])
 
+    print("data loaded")
+    print("doc_id:", doc_ids[0])
+    print(text[0])
+
     # preprocess data
+    print("preprocessing data...")
     documents = []
     for text in texts:
         documents.append(preprocess(text,
@@ -55,10 +61,12 @@ def main():
                                     split_sentences=False))
 
     # calculate idf
+    print("calculating idf...")
     vectorizer = TfIdfVectorizer()
     vectorizer.fit(documents)
 
     # get scores 
+    print("calculating scores")
     scores = []
     for document in documents:
         tfidf = vectorizer.transform(document)
@@ -66,6 +74,7 @@ def main():
         scores.append(normalized_tfidf)
 
     # export result
+    print("exporting result...")
     result = get_result(doc_ids, scores)
 
     with open(save_dir, "w", encoding="utf-8") as json_file:
