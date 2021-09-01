@@ -21,30 +21,29 @@ word_order = config["word_order"]
 
 
 # get score 
-def get_result(doc_ids, scores):
+def get_result(doc_id, score):
     result = {}
     
-    for doc_id, score in zip(doc_ids, scores):
-        result["DOCID"] = doc_id
-        score_li = [[key, val] for key, val in score.item]
+    result["DOCID"] = doc_id
+    score_li = [[key, val] for key, val in score.items()]
 
-        # 단어 출력 방법
-        # 1: 단어 점수 기준 내림차순, 2: 단어 글자 기준 오름차순
-        if word_order == 1:
-            score_li.sort(key=lambda x:x[1], reverse=True)
-        elif word_order == 2:
-            score_li.sord(key=lambda x:x[0])
+    # 단어 출력 방법
+    # 1: 단어 점수 기준 내림차순, 2: 단어 글자 기준 오름차순
+    if word_order == 1:
+        score_li.sort(key=lambda x:x[1], reverse=True)
+    elif word_order == 2:
+        score_li.sord(key=lambda x:x[0])
 
-        # 단어 출력 개수: 0 ~ N
-        # 0으로 설정할 시 모든 단어 출력
-        n = len(score) if word_num == 0 else word_num
+    # 단어 출력 개수: 0 ~ N
+    # 0으로 설정할 시 모든 단어 출력
+    n = len(score) if word_num == 0 else word_num
 
-        score_strs = []
-        for i in range(n):
-            key, val = score_li[i]
-            score_str = "^".join([key,str(val)])
-            score_strs.append(score_str)
-        result["KEYWORD"] = " ".join(score_strs)
+    score_strs = []
+    for i in range(n):
+        key, val = score_li[i]
+        score_str = "^".join([key,str(val)])
+        score_strs.append(score_str)
+    result["KEYWORD"] = " ".join(score_strs)
         
     return result
 
@@ -84,15 +83,16 @@ def main():
     scores = []
     for document in documents:
         tfidf = vectorizer.transform(document)
-        normalized_tfidf = normalize(tfidf)
+        normalized_tfidf = normalize(tfidf, 100)
         scores.append(normalized_tfidf)
 
     # export result
     print("exporting result...")
-    result = get_result(doc_ids, scores)
 
     with open(save_dir, "w", encoding="utf-8") as json_file:
-        json.dump(result, json_file)
+        for doc_id, score in zip(doc_ids, scores):
+            result = get_result(doc_id, score)
+            json_file.write(json.dumps(result) + "\n")
 
     # analysis
     pass
