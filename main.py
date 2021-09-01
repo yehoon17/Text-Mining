@@ -92,7 +92,7 @@ def main():
     with open(save_dir, "w", encoding="utf-8") as json_file:
         for doc_id, score in zip(doc_ids, scores):
             result = get_result(doc_id, score)
-            json_file.write(json.dumps(result) + "\n")
+            json_file.write(json.dumps(result, ensure_ascii = False) + "\n")
 
     # analysis
     pass
