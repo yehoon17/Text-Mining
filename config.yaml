@@ -2,10 +2,10 @@
 load_dir: "./resources/2021-03-01.json"
 
 # 파일 출력 경로 및 파일 명
-save_dir: "./"
+save_dir: "./result/scores.json"
 
 # 분석할 필드 명 기재
-field: ""
+fields: ["doc_content"]
 
 # 전처리 옵션 값 기재
 # 1: 특수문자 제거, 2: 한글 이외에 모두 제거
