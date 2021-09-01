@@ -2,9 +2,8 @@
 
 import yaml
 import json
-import numpy as np
 from src.preprocess import preprocess
-from src.tfidf import TfIdfVectorizer
+from src.tfidf import TfIdfCalculator
 from src.normalization import normalize
 
 # load configuration
@@ -40,6 +39,8 @@ def get_result(doc_id, score):
 
     score_strs = []
     for i in range(n):
+        if i == len(score_li):
+            break
         key, val = score_li[i]
         score_str = "^".join([key,str(val)])
         score_strs.append(score_str)
@@ -75,15 +76,14 @@ def main():
 
     # calculate idf
     print("calculating idf...")
-    vectorizer = TfIdfVectorizer()
-    vectorizer.fit(documents)
+    calculator = TfIdfCalculator()
+    tfidf = calculator.get_tfidf(documents)
 
     # get scores 
     print("calculating scores")
     scores = []
-    for document in documents:
-        tfidf = vectorizer.transform(document)
-        normalized_tfidf = normalize(tfidf, 100)
+    for dic in tfidf:
+        normalized_tfidf = normalize(dic, 100)
         scores.append(normalized_tfidf)
 
     # export result
