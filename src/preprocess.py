@@ -17,10 +17,10 @@ def preprocess(text, preprocessing, split_sentences=True):
         # Preprocess by option
         # 1: Remove special char, 2: Remove all except Kor
         if preprocessing == 1:
-            sentences = [re.sub("[^A-Za-z0-9ㄱ-ㅎ가-힣\s]+", "", sentence) 
+            sentences = [re.sub("[^A-Za-z0-9ㄱ-ㅎ가-힣\s]+", " ", sentence) 
             for sentence in sentences]
         elif preprocessing == 2:
-            sentences = [re.sub("[^ㄱ-ㅎ가-힣\s]+", "", sentence)
+            sentences = [re.sub("[^ㄱ-ㅎ가-힣\s]+", " ", sentence)
             for sentence in sentences]
         else:
             raise NotValidPreprocessError
@@ -34,9 +34,9 @@ def preprocess(text, preprocessing, split_sentences=True):
         # Preprocess by option
         # 1: Remove special char, 2: Remove all except Kor
         if preprocessing == 1:
-            text = re.sub("[^A-Za-z0-9ㄱ-ㅎ가-힣\s]+", "", text)
+            text = re.sub("[^A-Za-z0-9ㄱ-ㅎ가-힣\s]+", " ", text)
         elif preprocessing == 2:
-            text = re.sub("[^ㄱ-ㅎ가-힣\s]+", "", text)
+            text = re.sub("[^ㄱ-ㅎ가-힣\s]+", " ", text)
         else:
             raise NotValidPreprocessError
 
