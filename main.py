@@ -50,7 +50,7 @@ def main():
 
     print("data loaded")
     print("doc_id:", doc_ids[0])
-    print(text[0])
+    print(texts[0])
 
     # preprocess data
     print("preprocessing data...")
