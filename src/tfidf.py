@@ -1,39 +1,37 @@
 # -*- coding: utf-8 -*-
 
-import numpy as np
+from collections import Counter
 from math import log
 
 
-class TfIdfVectorizer:
+class TfIdfCalculator:
     def __init__(self):
-        self.words = []
-        self.tf = {}
-        self.idf = {}
+        self.tf = []
+        self.df = Counter()
+        self.tfidf = []
 
-    def fit(self, documents):        
+    def get_tfidf(self, documents):
         # size: number of documents
         size = len(documents)
 
-        # words: list of all word in documents
-        self.words = list(set([word for document in documents for word in document]))
+        # get term frequency for each document
+        for document in documents:
+            self.tf.append(Counter(document))
+        
+        # get document frequency
+        for counter in self.tf:
+            self.df.update(set(counter.elements()))
 
-        for word in self.words:
-            self.idf[word] = inverse_document_frequency(documents, word, size)
+        # get inverse document frequenct
+        idf = {}
+        for word in set(self.df.elements()):
+            idf[word] = log(size / (1 + self.df[word]))
 
-    def transform(self, document):
-        words = list(set(document))
-        # term frequency
-        tf = {word : document.count(word) for word in words}
-
-        tfidf = {word : tf[word] * self.idf[word] for word in words}
-
-        return tfidf
-
-
-# get idf of a word
-def inverse_document_frequency(documents, word, size):
-    cnt = 0
-    for document in documents:
-        cnt += document.count(word)
-    
-    return log(size / (1 + cnt))
+        # calculate tf-idf
+        for counter in self.tf:
+            temp = {}
+            for word in set(counter.elements()):
+                temp[word] = counter[word] * idf[word]
+            self.tfidf.append(temp)
+        
+        return self.tfidf
