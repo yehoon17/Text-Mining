@@ -64,11 +64,12 @@ def main():
             doc_ids.append(data["doc_id"])
 
     print("data loaded")
+    print("# of documents:", len(doc_ids))
     # print("doc_id:", doc_ids[0])
     # print(texts[0])
 
     # preprocess data
-    print("preprocessing data...")
+    print("\npreprocessing data...")
     documents = []
     for text in texts:
         documents.append(preprocess(text,
