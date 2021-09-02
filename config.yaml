@@ -9,7 +9,7 @@ fields: ["doc_content"]
 
 # 전처리 옵션 값 기재
 # 1: 특수문자 제거, 2: 한글 이외에 모두 제거
-preprocessing: 1
+preprocessing: 2
 
 # 단어 출력 개수: 0 ~ N
 # 0으로 설정할 시 모든 단어 출력
@@ -18,3 +18,12 @@ word_num: 10
 # 단어 출력 방법
 # 1: 단어 점수 기준 내림차순, 2: 단어 글자 기준 오름차순
 word_order: 1
+
+# 문서 분석
+word_analysis:
+  tf_top_100: true
+  df_top_100: true
+  tfidf_deviation_doc: true
+  sort_by_score_100: true
+  longest_word_top_10: true
+  length_one_words: true
