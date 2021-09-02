@@ -8,6 +8,7 @@ class TfIdfCalculator:
     def __init__(self):
         self.tf = []
         self.df = Counter()
+        self.idf = []
         self.tfidf = []
         self.words = None
 
@@ -24,19 +25,27 @@ class TfIdfCalculator:
             self.df.update(set(counter.elements()))
 
         # get inverse document frequenct
+        self.idf = self.get_idf(size)
+
+        # calculate tf-idf
+        self.cal_tfidf()
+        
+        return self.tfidf
+
+    def get_idf(self, size):
         idf = {}
         self.words = set(self.df.elements())
         for word in self.words:
             idf[word] = log(size / (1 + self.df[word]))
 
-        # calculate tf-idf
+        return idf
+
+    def cal_tfidf(self):
         for counter in self.tf:
-            temp = {}
+            tfidf = {}
             for word in set(counter.elements()):
-                temp[word] = counter[word] * idf[word]
-            self.tfidf.append(temp)
-        
-        return self.tfidf
+                tfidf[word] = counter[word] * self.idf[word]
+            self.tfidf.append(tfidf)
 
     def get_tf(self, n):
         total_tf = Counter()
