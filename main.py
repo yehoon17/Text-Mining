@@ -51,7 +51,6 @@ def get_result(doc_id, score):
 
 def main():
     # load document data
-    print("loading data...")
     texts = []
     doc_ids = []
     with open(load_dir, encoding="utf-8") as f:
@@ -63,13 +62,7 @@ def main():
             texts.append(text)
             doc_ids.append(data["doc_id"])
 
-    print("data loaded")
-    print("# of documents:", len(doc_ids))
-    # print("doc_id:", doc_ids[0])
-    # print(texts[0])
-
     # preprocess data
-    print("\npreprocessing data...")
     documents = []
     for text in texts:
         documents.append(preprocess(text,
@@ -77,31 +70,24 @@ def main():
                                     split_sentences=False))
 
     # calculate idf
-    print("calculating idf...")
     calculator = TfIdfCalculator()
     tfidf = calculator.get_tfidf(documents)
 
     # get scores 
-    print("calculating scores...")
     scores = []
     for dic in tfidf:
         normalized_tfidf = normalize(dic, 100)
         scores.append(normalized_tfidf)
 
     # export result
-    print("exporting result...")
-
     with open(save_dir, "w", encoding="utf-8") as json_file:
         for doc_id, score in zip(doc_ids, scores):
             result = get_result(doc_id, score)
             json_file.write(json.dumps(result, ensure_ascii=False) + "\n")
-    print("complete\n")
 
     # analysis
-    print("start analysis")
     save_path = "result"
     analysis(doc_ids, scores, calculator, save_path)
-    print("analysis complete")
 
 
 if __name__ == "__main__":
