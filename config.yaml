@@ -9,7 +9,7 @@ fields: ["doc_content"]
 
 # 전처리 옵션 값 기재
 # 1: 특수문자 제거, 2: 한글 이외에 모두 제거
-preprocessing: 2
+preprocess_option: 2
 
 # 단어 출력 개수: 0 ~ N
 # 0으로 설정할 시 모든 단어 출력
