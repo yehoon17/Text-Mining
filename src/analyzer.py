@@ -9,11 +9,7 @@ class DocumentAnalyzer:
         self.analysis_option = analysis_option
         self.save_path = save_path
 
-    def analyze(self, extractor):
-        calculator = extractor.calculator
-        doc_ids = extractor.doc_ids
-        scores = extractor.scores
-
+    def analyze(self, calculator, doc_ids, scores):
         if self.analysis_option["tf_top_100"]:
             self.tf_top_100(calculator)
 

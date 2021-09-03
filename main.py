@@ -125,4 +125,6 @@ if __name__ == "__main__":
     extractor = KeywordExtractor(conf)
     extractor.extract()
     analyzer = DocumentAnalyzer(conf.analysis_option, "result")
-    analyzer.analyze(extractor)
+    analyzer.analyze(extractor.calculator,
+                     extractor.doc_ids,
+                     extractor.scores)
