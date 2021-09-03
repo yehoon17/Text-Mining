@@ -5,7 +5,7 @@ from heapq import nlargest
 
 
 class DocumentAnalyzer:
-    def __init__(self, analysis_option, save_path):
+    def __init__(self, analysis_option: dict, save_path: str):
         self.analysis_option = analysis_option
         self.save_path = save_path
 
