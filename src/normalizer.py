@@ -10,7 +10,10 @@ class Normalizer:
 
         normalized_dic = {}
         for key, val in dic.items():
-            normalized_val = (val - min_val) / (max_val - min_val)
+            if max_val == min_val:
+                normalized_val = 1
+            else:
+                normalized_val = (val - min_val) / (max_val - min_val)
             normalized_dic[key] = round(normalized_val * self.scale, digits)
 
         return normalized_dic
