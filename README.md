@@ -1,27 +1,45 @@
-# Text-Mining
-Text mining project with Wisenut week 1
+# Text Mining
+
+문서에 대한 **TF-IDF** 분석과 간단한 지표 도출을 위한 프로젝트입니다. 자세한 요구 사항은 `Toy Project1(DM팀).pdf` 파일을 참고하세요.
 
 ## 프로젝트 개요
-tf-idf 점수로 요구사항에 맞게 문서를 분석  
-(자세한 사항은 Toy Project1(DM팀).pdf에 기재되어 있음)
 
-## 실행 방법
-1. config.yaml 에서 설정 작성
-2. main.py 실행  
- -> result 폴더에 결과가 파일로 출력됨
+1. JSON 형식의 문서를 불러와 전처리합니다.
+2. 전처리된 데이터에서 TF-IDF 점수를 계산합니다.
+3. 계산된 결과를 파일로 저장하고, 추가 지표를 분석합니다.
 
-## 코드 설명
-#### main.py
-config.yaml 에서 설정을 읽고, tf-idf 점수를 계산하여 문서를 분석한 결과를 result 폴더에 결과를 파일로 출력
+## 설치 및 실행 방법
 
-#### src/preprocesser.py
-문서의 내용을 설정에 맞게 전처리
+1. `config.yaml` 파일에서 데이터 경로와 분석 옵션을 설정합니다.
+2. Python 3 환경에서 다음 명령으로 실행합니다.
 
-#### src/tfidf.py
-전처리된 텍스트 데이터의 tf-idf 점수를 계산
+```bash
+python main.py
+```
 
-#### src/normalizer.py
-단어의 가장 큰 점수가 `scale`이 되도록 정규화
+실행이 완료되면 `result` 폴더에 분석 결과가 생성됩니다.
 
-#### src/analyzer.py
-Toy Project1(DM팀).pdf에서 주어진 6개 항목으로 문서 분석
+## 주요 파일 설명
+
+| 파일 | 설명 |
+| --- | --- |
+| **main.py** | 설정을 읽어 TF-IDF 점수를 계산하고 결과를 저장합니다. |
+| **src/preprocesser.py** | 문서 내용을 옵션에 따라 전처리합니다. |
+| **src/tfidf.py** | 전처리된 텍스트에서 TF-IDF 값을 계산합니다. |
+| **src/normalizer.py** | 단어 점수를 지정한 스케일에 맞춰 정규화합니다. |
+| **src/analyzer.py** | TF, DF 통계 등 여러 지표를 계산해 파일로 출력합니다. |
+
+## 분석 기능
+
+`src/analyzer.py`에서는 다음과 같은 결과 파일을 제공합니다.
+
+* **tf.txt** – 전체 문서에서 빈도 상위 100개 단어
+* **df.txt** – 문서 빈도 기준 상위 100개 단어
+* **diff.txt** – 각 문서에서 TF-IDF 상위 10개 단어의 편차
+* **doc.txt** – 점수 100점을 가장 많이 받은 문서 순서
+* **long.txt** – 단어 길이가 긴 순서 상위 10개
+* **one.txt** – 한 글자인 단어 목록
+
+## 예제 데이터
+
+`resources/2021-03-01.json` 파일에는 분석에 사용되는 샘플 뉴스 데이터가 포함되어 있습니다. 기본 설정에서는 이 파일을 읽어 결과를 생성합니다.
